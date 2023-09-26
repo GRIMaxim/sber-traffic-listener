@@ -6,6 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from alembic import context
 
 from src.database_config import Base, db_url
+from tests.test_crud_base import DBTestModel
+from src.traffic_listener.database import Domain
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
