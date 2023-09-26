@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "sber-traffic-listener"
+version = "0.1.0"
+description = ""
+authors = ["Grigoruk <grimax14@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.code.dependencies]
+ruff = "^0.0.291"
+mypy = "^1.5.1"
+deptry = "^0.12.0"
+
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^7.4.2"
+pytest-asyncio = "^0.21.1"
+pytest-env = "^1.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+fastapi = "^0.103.1"
+sqlalchemy = "^2.0.21"
+uvicorn = "^0.23.2"
+
+
+[tool.poetry.group.dep.dependencies]
+alembic = "^1.12.0"
+
+
+[tool.mypy]
+strict = true
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+select = ["ALL"]
+ignore = [
+    "D100", # pydocstyle - missing docstring in public module
+    "D107", # pydocstyle - missing docstring in `__init__`
+    "D104", # pydocstyle - missing docstring in public package
+    "S101", # flake8-bandit - use of `assert` detected
+    "ANN101", # flake8-annotations - missing type annotation for `self` in method
+    "INP001", # flake8-no-pep420 - file `alembic/env.py` is part of an implicit namespace package. Add an `__init__.py`.
+    "F401", # unused import
+    "RUF002", # Docstring contains ambiguous
+    "I001", # organise imports
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
