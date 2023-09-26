@@ -87,8 +87,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         if isinstance(data_update, BaseModel):
             data_update = data_update.model_dump()
-        if "pk" in data_update:
-            data_update.pop("pk")
         query = (
             update(self.model)
             .where(self.model.pk == data_update["pk"])
