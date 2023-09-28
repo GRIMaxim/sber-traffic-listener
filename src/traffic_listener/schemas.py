@@ -18,7 +18,7 @@ class LinkCreateMany(BaseModel):
                 "links": [
                     "http://yandex.ru/1",
                     "https://ya.ru/maps",
-                    "http://sber.com/"
+                    "http://sber.com/",
                 ],
             },
             ],
@@ -48,7 +48,7 @@ class DomainReadAll(BaseModel):
                 "domains": [
                     "yandex.ru",
                     "ya.ru",
-                    "sber.com"
+                    "sber.com",
                 ],
             },
             ],

@@ -1,4 +1,5 @@
-from typing import Annotated, Sequence
+from typing import Annotated
+from collections.abc import Sequence
 from urllib.parse import urlparse
 
 from fastapi import Query

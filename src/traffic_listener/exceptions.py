@@ -22,13 +22,15 @@ async def empty_list_exception_handler(request: Request, exc: ListIsEmptyError) 
                         content={"status": ErrorMessages.list_is_empty})
 
 
-async def word_list_exception_handler(request: Request, exc: ListIsNotContainsLinksError) -> JSONResponse:  # noqa: ARG001
+async def word_list_exception_handler(request: Request, # noqa: ARG001
+                                      exc: ListIsNotContainsLinksError) -> JSONResponse:  # noqa: ARG001
     """Обработчик для исключения ListIsNotContainsLinksError."""
     return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,
                         content={"status": ErrorMessages.list_contains_only_words})
 
 
-async def incorrect_parameters_exception_handler(request: Request, exc: ListIsNotContainsLinksError) -> JSONResponse:  # noqa: ARG001
+async def incorrect_parameters_exception_handler(request: Request, # noqa: ARG001
+                                                 exc: ListIsNotContainsLinksError) -> JSONResponse:  # noqa: ARG001
     """Обработчик для исключения IncorrectParametersError."""
     return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,
                         content={"status": ErrorMessages.incorrect_parameters})

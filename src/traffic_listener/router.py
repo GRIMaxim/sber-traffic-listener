@@ -47,7 +47,8 @@ async def add_visited_links(links: list[str] = Depends(check_links)) -> type[OkR
                 },
             },
             )
-async def get_unique_domains_by_period(params: Sequence[int | None] = Depends(check_parameters)) -> dict[str, list[str]]:
+async def get_unique_domains_by_period(params: Sequence[int | None] = Depends(check_parameters)) \
+        -> dict[str, list[str]]:
     """Обработчик для получения доменов из бд по заданному диапазону."""
     domains = await link_db.get_unique_domains_by_period(*params)
     return {"domains": domains}
