@@ -11,7 +11,7 @@ db_url: str = (
     f"{os.getenv('PG_USER')}:{os.getenv('PG_PASS')}@"
     f"{os.getenv('PG_HOST')}:{os.getenv('PG_PORT')}/{os.getenv('PG_DATABASE')}"
 )
-engine: AsyncEngine = create_async_engine(db_url, echo=True, future=True)
+engine: AsyncEngine = create_async_engine(db_url, echo=bool(os.getenv("F_TEST")), future=True)
 async_session_maker: async_sessionmaker[AsyncSession] = async_sessionmaker(
     engine,
     class_=AsyncSession,
