@@ -12,6 +12,19 @@ class LinkCreateMany(BaseModel):
 
     links: list[str]
 
+    model_config = {
+        "json_schema_extra": {
+            "examples": [{
+                "links": [
+                    "http://yandex.ru/1",
+                    "https://ya.ru/maps",
+                    "http://sber.com/"
+                ],
+            },
+            ],
+        },
+    }
+
 
 class LinkRead(LinkCreate):
     """Модель ответа для записи из таблицы Link."""
@@ -28,3 +41,16 @@ class DomainReadAll(BaseModel):
     """Модель ответа при запросе доменов."""
 
     domains: list[str]
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [{
+                "domains": [
+                    "yandex.ru",
+                    "ya.ru",
+                    "sber.com"
+                ],
+            },
+            ],
+        },
+    }
