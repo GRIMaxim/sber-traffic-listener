@@ -1,9 +1,12 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped
 
-from ..database_config import Base
+from src.database_config import Base
 
 
-class Domain(Base):
+class Link(Base):
+    """Схема данных для таблицы ссылок, посещенных пользователем."""
+
+    __tablename__ = "link"
 
     visit_time: Mapped[int]
-    domain: Mapped[str]
+    link: Mapped[str]
