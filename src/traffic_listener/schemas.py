@@ -1,22 +1,30 @@
-from pydantic import BaseModel
-from pydantic.fields import Field
+from pydantic import BaseModel, ConfigDict
 
 
-class DomainCreate(BaseModel):
-    link: str = Field()
+class LinkCreate(BaseModel):
+    """Модель запроса для создания записи в таблице Link."""
+
+    link: str
 
 
-class DomainRead(DomainCreate):
-    pass
+class LinkCreateMany(BaseModel):
+    """Модель запроса для создания нескольких записей в таблице Link."""
+
+    links: list[str]
 
 
-class DomainUpdate(DomainCreate):
-    pk: int
+class LinkRead(LinkCreate):
+    """Модель ответа для записи из таблицы Link."""
+
+    visit_time: int
+    model_config = ConfigDict(from_attributes=True)
+
+
+class LinkUpdate(LinkRead):
+    """Модель запроса на изменение записи в таблице Link."""
 
 
 class DomainReadAll(BaseModel):
-    domains: list[DomainRead]
+    """Модель ответа при запросе доменов."""
 
-
-class DomainCreateMany(BaseModel):
-    links: list[DomainCreate]
+    domains: list[str]
