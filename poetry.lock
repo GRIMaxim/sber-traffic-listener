@@ -893,23 +893,6 @@ docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1.0)"]
 testing = ["coverage (>=6.2)", "flaky (>=3.5.0)", "hypothesis (>=5.7.1)", "mypy (>=0.931)", "pytest-trio (>=0.7.0)"]
 
 [[package]]
-name = "pytest-env"
-version = "1.0.1"
-description = "py.test plugin that allows you to add environment variables."
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "pytest_env-1.0.1-py3-none-any.whl", hash = "sha256:e8faf927c6fcdbbc8fe3317506acc116713c9708d01652a0fd945f9ae27b71aa"},
-    {file = "pytest_env-1.0.1.tar.gz", hash = "sha256:603fe216e8e03a5d134989cb41317c59aabef013d2250c71b864ab0798fbe6f6"},
-]
-
-[package.dependencies]
-pytest = ">=7.3.1"
-
-[package.extras]
-test = ["coverage (>=7.2.7)", "pytest-mock (>=3.10)"]
-
-[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -922,6 +905,20 @@ files = [
 
 [package.dependencies]
 six = ">=1.5"
+
+[[package]]
+name = "python-dotenv"
+version = "1.0.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
+    {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
 
 [[package]]
 name = "requests"
@@ -1136,4 +1133,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "7d2153c852dd9a4d3375b131878e44e7d0de472cf1c67c05897cd78a61a000b1"
+content-hash = "5800989f13e66ab31ff31c2eced0192434d81b379686a98ad0fdc71841afdfc3"
