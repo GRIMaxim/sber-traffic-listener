@@ -8,7 +8,7 @@ from alembic import context
 
 from src.database_config import Base, db_url
 from src.traffic_listener.database import Link
-if os.getenv("F_TEST"):
+if os.getenv("F_TEST") == "true":
     from tests.test_crud_base import DBTestModel
 
 # this is the Alembic Config object, which provides
