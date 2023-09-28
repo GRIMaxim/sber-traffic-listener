@@ -18,8 +18,8 @@ async def check_links(input_links: LinkCreateMany) -> list[str]:
     return links
 
 
-async def check_parameters(start: Annotated[int | None, Query(alias="from", example=1234567890)] = None,
-                           end: Annotated[int | None, Query(alias="to", example=2345678901)] = None) \
+async def check_parameters(start: Annotated[int | None, Query(alias="from")] = None,
+                           end: Annotated[int | None, Query(alias="to")] = None) \
         -> Sequence[int | None]:
     """Валидация на корректность ввода параметров."""
     if start and end and start > end:
