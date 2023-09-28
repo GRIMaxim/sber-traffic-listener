@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:15-alpine3.18
+    container_name: database
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=container_db
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    ports:
+      - "5467:5432"
+  app:
+    build: .
+    depends_on: [database]
+    environment:
+      - PG_DRIVERNAME=postgresql+asyncpg
+      - PG_USER=admin
+      - PG_PASS=admin
+      - PG_HOST=database
+      - PG_PORT=5432
+      - PG_DATABASE=container_db
+    ports:
+      - "8034:80"
+
+volumes:
+  db_volume:
