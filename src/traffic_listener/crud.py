@@ -1,31 +1,50 @@
+from collections.abc import Sequence
+from urllib.parse import urlparse
 from time import time
 
 from sqlalchemy import insert, select
 
-from ..crud_base import CRUDBase
-from ..utils import async_execute
-from database import Domain
-from schemas import DomainCreate, DomainUpdate, DomainCreateMany
+from src.crud_base import CRUDBase
+from src.utils import async_execute
+from .database import Link
+from .schemas import LinkCreate, LinkUpdate
 
 
-class CRUDDomain(CRUDBase[Domain, DomainCreate, DomainUpdate]):
-    async def create_many(self, data_in: DomainCreateMany) -> list[Domain]:
+class CRUDLink(CRUDBase[Link, LinkCreate, LinkUpdate]):
+    """Расширение CRUDBase для таблицы Link."""
 
-        data_in = [Domain(visit_time=int(time()), domain=domain) for domain in data_in]
+    async def create_many(self, data_in: Sequence[str]) -> list[str]:
+        """Запись нескольких ссылок в таблицу Link."""
+        values = [{"visit_time": int(time()), "link": link} for link in data_in]
 
-        query = insert(self.model).values(**data_in).returning(self.model)
+        query = insert(self.model).values(values).returning(self.model.link)
         result = await async_execute(query)
-        created_links: list[Domain] = [link[0] for link in result.all()]
+        created_links: list[str] = [link[0] for link in result.all()]
 
         return created_links
 
-    async def get_by_time_delta(self, start: int, end: int) -> list[Domain]:
+    async def get_unique_domains_by_period(self, start: int | None = None, end: int | None = None) -> list[str]:
+        """Получение списка уникальных доменов из таблицы Link по заданному диапазону.
 
-        query = select(self.model).where(start <= self.model.visit_time <= end)
+        **Параметры**
+
+        *start* - минимальное значение диапазона для получения доменов.
+        Если start не задан, установится значение end - 10 (секунд)
+
+        *end* - максимально значение диапазона для получения доменов.
+        Если end не задан, установится значение int(time()) на момент вызова
+        """
+        if not end:
+            end = int(time())
+        if not start:
+            start = end - 10
+
+        query = select(self.model.link).where((self.model.visit_time >= start) & (self.model.visit_time <= end))
         result = await async_execute(query)
-        created_links: list[Domain] = [link[0] for link in result.all()]
+        getting_links: list[str] = [link[0] for link in result.all()]
+        return list(
+            {domain for link in getting_links if (domain := urlparse(link).hostname) is not None})
 
-        return created_links
 
 
-domain_db = CRUDDomain(Domain)
+link_db = CRUDLink(Link)
