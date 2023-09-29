@@ -1,9 +1,9 @@
 from asyncio import AbstractEventLoop, get_event_loop_policy
-from collections.abc import Iterator
+from collections.abc import Iterator, AsyncIterator
 
 import pytest
 import pytest_asyncio
-from async_asgi_testclient import TestClient
+from httpx import AsyncClient
 
 from src.main import main_app
 
@@ -45,9 +45,7 @@ def event_loop() -> Iterator[AbstractEventLoop]:
 
 
 @pytest_asyncio.fixture()
-async def client() -> TestClient:
+async def client() -> AsyncIterator[AsyncClient]:
     """Создание клиента для тестов."""
-    host, port = "127.0.0.1", "8091"
-    scope = {"clien": (host, port)}
-    async with TestClient(main_app, scope=scope) as client:
+    async with AsyncClient(app=main_app, base_url="http://127.0.0.1:8091") as client:
         yield client

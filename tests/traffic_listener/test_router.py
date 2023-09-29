@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 from fastapi import status
-from async_asgi_testclient import TestClient
+from httpx import AsyncClient
 from faker import Faker
 
 from src.traffic_listener.constants import ErrorMessages
@@ -17,7 +17,7 @@ class TestRouter:
     """Класс с собранием тестов для роутера traffic_listener."""
 
     @pytest.mark.asyncio()
-    async def test_add_visited_links(self, client: TestClient) -> None:
+    async def test_add_visited_links(self, client: AsyncClient) -> None:
         """Тестирование добавления посещенных ссылок."""
         response: Response = await client.post("/visited_links", json={"links": [fk.url() for _ in range(5)]})
         assert response.status_code == status.HTTP_201_CREATED
@@ -25,7 +25,7 @@ class TestRouter:
         assert response_data["status"] == "ok"
 
     @pytest.mark.asyncio()
-    async def test_add_empty_list(self, client: TestClient) -> None:
+    async def test_add_empty_list(self, client: AsyncClient) -> None:
         """Попытка добавления пустого списка ссылок."""
         response: Response = await client.post("/visited_links", json={"links": []})
         assert response.status_code == status.HTTP_411_LENGTH_REQUIRED
@@ -33,7 +33,7 @@ class TestRouter:
         assert response_data["status"] == ErrorMessages.list_is_empty
 
     @pytest.mark.asyncio()
-    async def test_add_words(self, client: TestClient) -> None:
+    async def test_add_words(self, client: AsyncClient) -> None:
         """Попытка добавления списка слов вместо ссылок."""
         response: Response = await client.post("/visited_links", json={"links": [fk.name() for _ in range(5)]})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
@@ -41,7 +41,7 @@ class TestRouter:
         assert response_data["status"] == ErrorMessages.list_contains_only_words
 
     @pytest.mark.asyncio()
-    async def test_get_unique_domains_by_period(self, client: TestClient) -> None:
+    async def test_get_unique_domains_by_period(self, client: AsyncClient) -> None:
         """Тестирование получения уникальных доменов по заданному диапазону."""
         response: Response = await client.get("/visited_links")
         assert response.status_code == status.HTTP_200_OK
@@ -49,7 +49,7 @@ class TestRouter:
         assert "domains" in response_data
 
     @pytest.mark.asyncio()
-    async def test_get_unique_domains_by_replace_period(self, client: TestClient) -> None:
+    async def test_get_unique_domains_by_replace_period(self, client: AsyncClient) -> None:
         """Попытка получения доменов с параметрами start > end."""
         response: Response = await client.get("/visited_links?from=100&to=1")
         assert response.status_code == status.HTTP_400_BAD_REQUEST
