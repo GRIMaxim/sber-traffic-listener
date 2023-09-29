@@ -4,7 +4,7 @@ from typing import Any, Generic, TypeVar
 from pydantic import BaseModel
 from sqlalchemy import delete, insert, select, update
 
-from .database_config import Base
+from .database import Base
 from .utils import async_execute
 
 ModelType = TypeVar("ModelType", bound=Base)

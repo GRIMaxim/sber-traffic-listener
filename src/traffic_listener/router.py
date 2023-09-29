@@ -2,10 +2,9 @@ from collections.abc import Sequence
 
 from fastapi import APIRouter, status, Depends
 
-from src.default_responses import OkResponse
-from .schemas import DomainReadAll
+from src.schemas import OkResponse
+from .schemas import DomainReadAll, ListIsEmpty, ListContainOnlyWords, IncorrectParameters
 from .constants import ErrorMessages
-from .exception_schemas import ListIsEmpty, ListContainOnlyWords, IncorrectParameters
 from .crud import link_db
 from .dependencies import check_links, check_parameters
 

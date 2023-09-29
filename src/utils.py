@@ -6,7 +6,7 @@ from sqlalchemy import Executable
 from sqlalchemy.engine.result import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database_config import async_session_maker
+from src.database import async_session_maker
 
 
 @asynccontextmanager

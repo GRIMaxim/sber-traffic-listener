@@ -4,7 +4,7 @@ from time import time
 
 from sqlalchemy import insert, select
 
-from src.crud_base import CRUDBase
+from src.crud import CRUDBase
 from src.utils import async_execute
 from .database import Link
 from .schemas import LinkCreate, LinkUpdate

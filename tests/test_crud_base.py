@@ -6,8 +6,8 @@ from faker import Faker
 from pydantic import BaseModel
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column
-from src.database_config import Base
-from src.crud_base import CRUDBase
+from src.database import Base
+from src.crud import CRUDBase
 
 fk = Faker()
 

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped
 
-from src.database_config import Base
+from src.database import Base
 
 
 class Link(Base):
