@@ -10,3 +10,4 @@ class Link(Base):
 
     visit_time: Mapped[int]
     link: Mapped[str]
+    domain: Mapped[str]
