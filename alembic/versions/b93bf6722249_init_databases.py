@@ -24,6 +24,7 @@ def upgrade() -> None:
     op.create_table("link",
     sa.Column("visit_time", sa.Integer(), nullable=False),
     sa.Column("link", sa.String(), nullable=False),
+    sa.Column("domain", sa.String(), nullable=False),
     sa.Column("pk", sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint("pk", name=op.f("link_pk_pkey")),
     )

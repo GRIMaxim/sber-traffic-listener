@@ -28,17 +28,17 @@ class TestRouter:
     async def test_add_empty_list(self, client: AsyncClient) -> None:
         """Попытка добавления пустого списка ссылок."""
         response: Response = await client.post("/visited_links", json={"links": []})
-        assert response.status_code == status.HTTP_411_LENGTH_REQUIRED
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
         response_data = response.json()
-        assert response_data["status"] == ErrorMessages.list_is_empty
+        assert response_data["status"] == ErrorMessages.incorrect_links
 
     @pytest.mark.asyncio()
     async def test_add_words(self, client: AsyncClient) -> None:
         """Попытка добавления списка слов вместо ссылок."""
         response: Response = await client.post("/visited_links", json={"links": [fk.name() for _ in range(5)]})
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
         response_data = response.json()
-        assert response_data["status"] == ErrorMessages.list_contains_only_words
+        assert response_data["status"] == ErrorMessages.incorrect_links
 
     @pytest.mark.asyncio()
     async def test_get_unique_domains_by_period(self, client: AsyncClient) -> None:
@@ -55,4 +55,12 @@ class TestRouter:
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         response_data = response.json()
         assert response_data["status"] == ErrorMessages.incorrect_parameters
+
+    @pytest.mark.asyncio()
+    async def test_get_empty_domains(self, client: AsyncClient) -> None:
+        """Полученный список доменнов оказался пустым."""
+        response: Response = await client.get("/visited_links?from=1&to=2")
+        assert response.status_code == status.HTTP_200_OK
+        response_data = response.json()
+        assert response_data["status"] == ErrorMessages.empty_result
 
