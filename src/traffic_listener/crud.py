@@ -15,7 +15,8 @@ class CRUDLink(CRUDBase[Link, LinkCreate, LinkUpdate]):
 
     async def create_many(self, data_in: LinkCreateMany) -> None:
         """Запись нескольких ссылок в таблицу Link."""
-        values = [{"visit_time": int(time()), "link": link.unicode_string(), "domain": link.host} for link in data_in.links]
+        values = [{"visit_time": int(time()), "link": link.unicode_string(), "domain": link.host}
+                  for link in data_in.links]
 
         query = insert(self.model).values(values).returning(self.model.link)
         await async_execute(query)
